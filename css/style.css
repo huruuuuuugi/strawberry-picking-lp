@@ -2,47 +2,48 @@
    1. トークン
    ========================================================== */
 :root {
-  /* 色（Figmaのスクショから取得） */
-  --color-bg: #FCF3EB;
+  /* ---------- 色（Figmaのスクショから取得） ---------- */
   /* 生成りの背景 */
+  --color-bg: #FCF3EB;
   --color-white: #FFFFFF;
-  --color-beni: #CD2D3C;
   /* 紅派・紅ほっぺ */
+  --color-beni: #CD2D3C;
   /* 白派の大きい文字（24px以上）。生成りに3.63・FVのピンクに3.20 */
   --color-shiro: #D05868;
   /* 白派の小さい文字・ボタン。白文字に5.10・生成りに4.65 */
   --color-shiro-dark: #B04F5C;
-  --color-green: #3F7E4E;
   /* CTA・バッジ */
-  --color-text: #4C2D28;
+  --color-green: #3F7E4E;
   /* こげ茶の文字（傍点の色から取得） */
-  --color-muted: #6B5853;
+  --color-text: #4C2D28;
   /* 補足の文字 */
-  --color-orange: #FF9D00;
+  --color-muted: #6B5853;
   /* 残りわずか（△） */
-  --color-line: #EAE6E2;
+  --color-orange: #FF9D00;
   /* カレンダーの枠線 */
-  --color-line-dark: #D1CFCE;
+  --color-line: #EAE6E2;
   /* 料金表の区切り線 */
+  --color-line-dark: #D1CFCE;
+  /* 淡いピンク：FAQの開いた質問・学生料金の行・PCで見たときの左右の背景 */
   --color-pink: #FCDEDB;
-  /* 淡いピンク：FAQの開いた質問・PCで見たときの左右の背景 */
 
-  /* フォント */
-  --font-round: "Zen Maru Gothic", sans-serif;
+  /* ---------- フォント ---------- */
   /* 見出し・ボタン */
+  --font-round: "Zen Maru Gothic", sans-serif;
   /* 本文：iPhone・Macに最初から入っているヒラギノを優先（Webフォントのダウンロードが不要になる）。
      ヒラギノがない端末（Windowsなど）だけ Noto Sans JP を読み込む */
   --font-body: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
 
-  /* 余白（Figmaの値） */
-  --gutter: 16px;
+  /* ---------- 余白（Figmaの値） ---------- */
   /* 左右の余白 */
-  --section-top: 24px;
+  --gutter: 16px;
   /* セクション上の余白 */
-  --heading-gap: 24px;
+  --section-top: 24px;
   /* 見出し → 中身 */
+  --heading-gap: 24px;
 
-  /* 動き：行き過ぎて戻る「ポン！」とした動き */
+  /* ---------- 動き ---------- */
+  /* 行き過ぎて戻る「ポン！」とした動き */
   --ease-pop: cubic-bezier(.34, 1.56, .64, 1);
   --ease-out: cubic-bezier(.22, 1, .36, 1);
 
@@ -93,27 +94,41 @@ a {
   text-decoration: none;
 }
 
+/* display:flex などを書いた要素でも、hidden なら必ず隠す */
 [hidden] {
   display: none !important;
 }
 
-/* display:flex などを書いた要素でも、hidden なら必ず隠す */
-
 /* ==========================================================
    3. ベース
    ========================================================== */
+/* iPhoneを横向きにしたとき、文字が勝手に拡大されないようにする */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 body {
-  background: var(--color-pink); /* PCで見たとき、LPの左右に見える色 */
+  background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-body);
   font-size: 14px;
   line-height: 1.6;
 }
 
+/* PCで見たとき（LPより画面が広いとき）だけ、左右をピンクにする。
+   スマホでは生成りのままなので、上下に引っ張ってもピンクは見えない */
+@media (min-width: 431px) {
+  body {
+    background: var(--color-pink);
+  }
+}
+
 /* デザインはスマホ（390px）のみ。PCでは中央に置く */
 .page {
   max-width: 430px;
   margin-inline: auto;
+  overflow-x: hidden; /* clip に対応していない古いiOS（15以前）用の代わり */
   overflow-x: clip;
   background: var(--color-bg); /* LPの中は生成り */
 }
@@ -197,8 +212,6 @@ body {
   color: var(--color-beni);
 }
 
-
-
 .heading {
   font-family: var(--font-round);
   font-weight: 700;
@@ -226,17 +239,22 @@ body {
   min-width: 0;
 }
 
+/* 予約ボタンは縮ませない（縮むのはロゴだけ） */
+.header .button {
+  flex: none;
+}
+
 /* ==========================================================
    6. FV
    ========================================================== */
 .fv {
   position: relative;
-  height: 600px;
+  height: 520px; /* スマホの最初の画面にボタンまで入るよう、Figmaの600pxから縮めた */
 }
 
 .fv__half {
   position: relative;
-  height: 300px;
+  height: 260px;
   overflow: hidden;
 }
 
@@ -270,7 +288,7 @@ body {
 .fv__glow {
   position: absolute;
   left: 50%;
-  top: 111px;
+  top: 71px; /* 上下の境目（260px）を中心に */
   width: 378px;
   height: 378px;
   translate: -50% 0;
@@ -303,24 +321,24 @@ body {
 
 .fv__beni {
   left: 55px;
-  top: 220px;
+  top: 180px; /* 境目の80px上 */
   color: var(--color-beni);
   transform: rotate(-7deg);
 }
 
+/* 右端から置き、画面幅が変わっても右寄せを保つ */
 .fv__shiro {
   right: 31px;
-  top: 338px;
+  top: 298px; /* 境目の38px下 */
   color: var(--color-shiro);
   transform: rotate(7deg);
 }
 
-/* 右端から置き、画面幅が変わっても右寄せを保つ */
 .fv__sub {
   position: absolute;
   left: 0;
   right: 0;
-  top: 286px;
+  top: 246px; /* 境目にまたがる */
   text-align: center;
   font-size: 20px;
   font-weight: 700;
@@ -371,7 +389,7 @@ body {
 .fv__badge {
   position: absolute;
   right: 141px;
-  top: 183px;
+  bottom: 59px; /* 白派ラベルと同じく下から置き、ラベルの左上にかかる位置を保つ */
   z-index: 4;
   /* ラベルと同じく右端から。ラベルの左上にかかる位置 */
   display: grid;
@@ -411,8 +429,8 @@ body {
 
 .fv-info__period {
   margin-top: 16px;
-  font-size: 12px;
-  line-height: 18px;
+  font-size: 14px; /* 日程を決める決め手なので本文と同じ大きさ */
+  line-height: 21px;
   color: var(--color-muted);
 }
 
@@ -762,19 +780,18 @@ body {
   margin-top: 5px;
 }
 
+/* 期間外の日 */
 .calendar__table td.is-out {
   background: transparent;
   color: var(--color-line-dark);
 }
 
-/* 期間外の日 */
+/* JSが動かないときの案内 */
 .calendar__table td.calendar__fallback {
   height: auto;
   padding: 16px 8px;
   font-weight: 400;
 }
-
-/* JSが動かないときの案内 */
 
 /* ○△× は文字ではなくCSSで描く。どの環境でも同じ太さ・色になる */
 .calendar__mark {
@@ -901,10 +918,23 @@ body {
 .price__row dd {
   margin: 0;
   font-weight: 700;
+}
+
+/* 金額の行は値を一段大きく（期間・時間は本文と同じ14px） */
+.price__row--price dd {
   font-size: 16px;
 }
 
-/* 金額は一段大きく */
+/* 学生の行：ペルソナ（大学生）に一番効く情報なので、背景を敷いて金額をさらに大きく */
+.price__row--student {
+  padding-inline: 8px;
+  border-radius: 4px;
+  background: var(--color-pink);
+}
+
+.price__row--student dd {
+  font-size: 18px;
+}
 .price__note {
   margin-top: 4px;
   font-size: 12px;
@@ -1020,11 +1050,11 @@ body {
   /* 標準の ▶ を消す */
 }
 
+/* Safari用 */
 .faq__q::-webkit-details-marker {
   display: none;
 }
 
-/* Safari用 */
 .faq__item[open] .faq__q {
   background: var(--color-pink);
 }
@@ -1088,8 +1118,8 @@ body {
 .cta__note {
   margin-top: 24px;
   font-weight: 700;
-  font-size: 12px;
-  line-height: 17px;
+  font-size: 14px;
+  line-height: 20px;
 }
 
 .cta__note::before {
@@ -1100,10 +1130,11 @@ body {
   content: " /";
 }
 
+/* 最後のひと押しなので、LINEボタンはFVと同じ大きさ（button--m）。幅は写真の空白に収まる300pxまで */
 .cta__buttons {
   display: grid;
   gap: 8px;
-  width: 245px;
+  width: min(100%, 300px);
   margin-top: 4px;
 }
 
@@ -1112,8 +1143,17 @@ body {
    ========================================================== */
 .footer {
   display: flex;
-  justify-content: center;
-  padding: 8px 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 0 16px;
+}
+
+/* デモサイトであることのお知らせ（押しても動かないボタンを「壊れている」と思われないように） */
+.footer__note {
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--color-muted);
 }
 
 /* ==========================================================
@@ -1272,11 +1312,11 @@ body {
   }
 }
 
+/* 押した瞬間にむにっとへこむ */
 .button:active {
   scale: .95;
 }
 
-/* 押した瞬間にむにっとへこむ */
 /* 最後のLINEボタン：画面に入ってから3回だけはずむ（ずっと動き続けないように） */
 .js .cta__buttons.is-in .button:not(.button--outline) {
   animation: nudge 3s ease-in-out 1s 3;
