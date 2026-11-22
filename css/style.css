@@ -8,8 +8,10 @@
   --color-white: #FFFFFF;
   --color-beni: #CD2D3C;
   /* 紅派・紅ほっぺ */
-  --color-shiro: #D05868;
   /* 白派の大きい文字（24px以上）。生成りに3.63・FVのピンクに3.20 */
+  --color-shiro: #D05868;
+  /* 白派の小さい文字・ボタン。白文字に5.10・生成りに4.65 */
+  --color-shiro-dark: #B04F5C;
   --color-green: #3F7E4E;
   /* CTA・バッジ */
   --color-text: #4C2D28;
@@ -28,8 +30,9 @@
   /* フォント */
   --font-round: "Zen Maru Gothic", sans-serif;
   /* 見出し・ボタン */
-  --font-body: "Noto Sans JP", sans-serif;
-  /* 本文 */
+  /* 本文：iPhone・Macに最初から入っているヒラギノを優先（Webフォントのダウンロードが不要になる）。
+     ヒラギノがない端末（Windowsなど）だけ Noto Sans JP を読み込む */
+  --font-body: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
 
   /* 余白（Figmaの値） */
   --gutter: 16px;
@@ -117,6 +120,11 @@ body {
 
 .u-beni {
   color: var(--color-beni);
+}
+
+/* 文節のまとまり。行が折り返すときは、このまとまりの間でだけ折り返す（1〜2文字だけ次の行に残らないように） */
+.u-phrase {
+  display: inline-block;
 }
 
 .u-shiro {
@@ -442,7 +450,7 @@ body {
 }
 
 .variety__tab--shiro[aria-selected="true"] {
-  background: var(--color-shiro);
+  background: var(--color-shiro-dark); /* 白い16px文字が乗るので濃い方 */
 }
 
 .variety__tab:focus-visible {
@@ -517,7 +525,7 @@ body {
 }
 
 .variety__panel--shiro .variety__name {
-  color: var(--color-shiro);
+  color: var(--color-shiro-dark); /* 18pxは「大きい文字」に入らないので濃い方 */
 }
 
 .variety__list {
@@ -645,23 +653,26 @@ body {
   left: -39px;
 }
 
-/* 左の吹き出しと重ならないよう、画面が狭いほど小さく（390pxで66px）。320px台では置く場所がないので隠す */
-.enjoy__illust--berry-l {
-  right: 25px;
-  top: 12px;
-  width: clamp(40px, calc(100% - 330px), 60px);
+/* ----------------------------------------------------------
+   イラストは吹き出しの中に入れ、吹き出しの「外側」に置く。
+   left: calc(100% + 〇px) ＝ 吹き出しの右端から〇px外。
+   吹き出しには max-width をつけて、イラストの場所を必ず空けておく。
+   画面が狭いと、吹き出しの文章が折り返すだけで、イラストは隠れない。
+   ---------------------------------------------------------- */
+.enjoy__item--1 .enjoy__bubble {
+  max-width: calc(100% - 16px - 76px); /* 右に76px：いちご2つ分 */
 }
 
-@media (max-width: 359px) {
-  .enjoy__illust--berry-l {
-    display: none;
-  }
+.enjoy__illust--berry-l {
+  left: calc(100% + 10px);
+  top: 0;
+  width: 56px;
 }
 
 .enjoy__illust--berry-s {
-  right: 62px;
-  top: 92px;
-  width: 44px;
+  left: calc(100% + 30px);
+  top: 70px;
+  width: 40px;
   transform: rotate(8deg);
 }
 
@@ -673,11 +684,14 @@ body {
   right: -34px;
 }
 
-/* 右の吹き出しと重ならないよう、画面が狭いほどカメラを小さくする（390pxで140px） */
+.enjoy__item--2 .enjoy__bubble {
+  max-width: calc(100% - 16px - 124px); /* 左に124px：カメラ分 */
+}
+
 .enjoy__illust--camera {
-  left: 24px;
-  top: 18px;
-  width: clamp(80px, calc(100% - 250px), 120px);
+  right: calc(100% + 12px); /* 吹き出しの左端から12px外 */
+  top: 8px;
+  width: 104px;
   transform: rotate(-10deg);
 }
 
@@ -689,10 +703,14 @@ body {
   left: -34px;
 }
 
+.enjoy__item--3 .enjoy__bubble {
+  max-width: calc(100% - 16px - 90px); /* 右に90px：スプーン分 */
+}
+
 .enjoy__illust--spoon {
-  left: 262px;
-  top: -4px;
-  width: 82px;
+  left: calc(100% + 12px);
+  top: -6px;
+  width: 70px;
   transform: rotate(14deg);
 }
 
@@ -1152,21 +1170,22 @@ body {
   }
 }
 
+/* 「押してね」と軽くはずむ。
+   押したときの :active は個別の scale を使うので、こちらは transform で動かす。
+   2つは掛け合わされるので、はずんでいる最中でも押すとちゃんと凹む */
 @keyframes nudge {
-
-  /* 「押してね」と軽くはずむ */
   0%,
   24%,
   100% {
-    scale: 1;
+    transform: scale(1);
   }
 
   8% {
-    scale: 1.06;
+    transform: scale(1.06);
   }
 
   16% {
-    scale: .98;
+    transform: scale(.98);
   }
 }
 
