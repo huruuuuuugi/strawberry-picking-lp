@@ -24,7 +24,7 @@
   --color-line: #EAE6E2;
   /* 料金表の区切り線 */
   --color-line-dark: #D1CFCE;
-  /* 淡いピンク：FAQの開いた質問・学生料金の行・PCで見たときの左右の背景 */
+  /* 淡いピンク：FAQの開いた質問・PCで見たときの左右の背景 */
   --color-pink: #FCDEDB;
 
   /* ---------- フォント ---------- */
@@ -589,15 +589,15 @@ body {
   gap: 16px;
 }
 
-/* 1項目 = 吹き出し（上）＋丸い写真（下）。写真とイラストは位置を指定して置く */
+/* 1項目 = 吹き出し（上）＋丸い写真（下）。
+   どちらも普通の流れで縦に積むので、吹き出しの文章が折り返して高くなっても、
+   写真はその分だけ下にずれて、重ならない。左右の位置は margin で決める */
 .enjoy__item {
   position: relative;
-  height: 488px;
 }
 
 .enjoy__bubble {
-  position: absolute;
-  top: 0;
+  position: relative; /* しっぽ（::after）とイラストの基準 */
   z-index: 1;
   width: fit-content;
   /* 文章の長さに合わせて幅が決まる */
@@ -637,8 +637,8 @@ body {
 /* 丸い枠（span）の中に写真を入れる。枠が overflow: hidden なので、
    中の写真だけを拡大しても丸の大きさは変わらない */
 .enjoy__photo {
-  position: absolute;
-  top: 130px;
+  display: block;
+  margin-top: 30px; /* しっぽ（14px）＋すき間 */
   width: 358px;
   height: 358px;
   border-radius: 50%;
@@ -664,11 +664,11 @@ body {
 
 /* 左・右・左：吹き出しと写真の位置を項目ごとに入れ替える */
 .enjoy__item--1 .enjoy__bubble {
-  left: 16px;
+  margin-left: 16px;
 }
 
 .enjoy__item--1 .enjoy__photo {
-  left: -39px;
+  margin-left: -39px; /* 左に裁ち落とす */
 }
 
 /* ----------------------------------------------------------
@@ -678,7 +678,7 @@ body {
    画面が狭いと、吹き出しの文章が折り返すだけで、イラストは隠れない。
    ---------------------------------------------------------- */
 .enjoy__item--1 .enjoy__bubble {
-  max-width: calc(100% - 16px - 76px); /* 右に76px：いちご2つ分 */
+  max-width: calc(100% - 16px - 84px); /* 右に84px：いちご2つ分＋傾けた分のゆとり */
 }
 
 .enjoy__illust--berry-l {
@@ -694,12 +694,15 @@ body {
   transform: rotate(8deg);
 }
 
+/* 右寄せ：margin-left: auto で右端に寄せる */
 .enjoy__item--2 .enjoy__bubble {
-  right: 16px;
+  margin-left: auto;
+  margin-right: 16px;
 }
 
 .enjoy__item--2 .enjoy__photo {
-  right: -34px;
+  margin-left: auto;
+  margin-right: -34px; /* 右に裁ち落とす */
 }
 
 .enjoy__item--2 .enjoy__bubble {
@@ -714,15 +717,15 @@ body {
 }
 
 .enjoy__item--3 .enjoy__bubble {
-  left: 16px;
+  margin-left: 16px;
 }
 
 .enjoy__item--3 .enjoy__photo {
-  left: -34px;
+  margin-left: -34px;
 }
 
 .enjoy__item--3 .enjoy__bubble {
-  max-width: calc(100% - 16px - 90px); /* 右に90px：スプーン分 */
+  max-width: calc(100% - 16px - 106px); /* 右に106px：スプーン分。傾けると横幅が約100pxに広がる */
 }
 
 .enjoy__illust--spoon {
@@ -925,11 +928,11 @@ body {
   font-size: 16px;
 }
 
-/* 学生の行：ペルソナ（大学生）に一番効く情報なので、背景を敷いて金額をさらに大きく */
-.price__row--student {
-  padding-inline: 8px;
-  border-radius: 4px;
-  background: var(--color-pink);
+/* 学生の行：ペルソナ（大学生）に一番効く情報なので、文字をピンクにして金額をさらに大きく。
+   ピンクは小さい文字でも読める濃い方（生成りに4.65） */
+.price__row--student dt,
+.price__row--student dd {
+  color: var(--color-shiro-dark);
 }
 
 .price__row--student dd {
