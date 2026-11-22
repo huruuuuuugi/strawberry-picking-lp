@@ -1,0 +1,1287 @@
+/* ==========================================================
+   1. トークン
+   ========================================================== */
+:root {
+  /* 色（Figmaのスクショから取得） */
+  --color-bg: #FCF3EB;
+  /* 生成りの背景 */
+  --color-white: #FFFFFF;
+  --color-beni: #CD2D3C;
+  /* 紅派・紅ほっぺ */
+  --color-shiro: #D05868;
+  /* 白派の大きい文字（24px以上）。生成りに3.63・FVのピンクに3.20 */
+  --color-green: #3F7E4E;
+  /* CTA・バッジ */
+  --color-text: #4C2D28;
+  /* こげ茶の文字（傍点の色から取得） */
+  --color-muted: #6B5853;
+  /* 補足の文字 */
+  --color-orange: #FF9D00;
+  /* 残りわずか（△） */
+  --color-line: #EAE6E2;
+  /* カレンダーの枠線 */
+  --color-line-dark: #D1CFCE;
+  /* 料金表の区切り線 */
+  --color-pink: #FCDEDB;
+  /* 淡いピンク：FAQの開いた質問・PCで見たときの左右の背景 */
+
+  /* フォント */
+  --font-round: "Zen Maru Gothic", sans-serif;
+  /* 見出し・ボタン */
+  --font-body: "Noto Sans JP", sans-serif;
+  /* 本文 */
+
+  /* 余白（Figmaの値） */
+  --gutter: 16px;
+  /* 左右の余白 */
+  --section-top: 24px;
+  /* セクション上の余白 */
+  --heading-gap: 24px;
+  /* 見出し → 中身 */
+
+  /* 動き：行き過ぎて戻る「ポン！」とした動き */
+  --ease-pop: cubic-bezier(.34, 1.56, .64, 1);
+  --ease-out: cubic-bezier(.22, 1, .36, 1);
+
+  --radius-s: 8px;
+  --shadow-label: 0 2px 4px rgba(59, 42, 38, .15);
+}
+
+/* ==========================================================
+   2. リセット
+   ========================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body,
+h1,
+h2,
+h3,
+p,
+ul,
+dl {
+  margin: 0;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* display:flex などを書いた要素でも、hidden なら必ず隠す */
+
+/* ==========================================================
+   3. ベース
+   ========================================================== */
+body {
+  background: var(--color-pink); /* PCで見たとき、LPの左右に見える色 */
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* デザインはスマホ（390px）のみ。PCでは中央に置く */
+.page {
+  max-width: 430px;
+  margin-inline: auto;
+  overflow-x: clip;
+  background: var(--color-bg); /* LPの中は生成り */
+}
+
+.u-beni {
+  color: var(--color-beni);
+}
+
+.u-shiro {
+  color: var(--color-shiro-dark);
+}
+
+/* ==========================================================
+   4. 共通パーツ
+   ========================================================== */
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--color-green);
+  color: var(--color-white);
+  font-family: var(--font-round);
+  font-weight: 700;
+}
+
+/* ホバーはマウスのある端末だけ。スマホではタップ後に「浮いたまま」残るのを防ぐ */
+@media (hover: hover) {
+  .button:hover {
+    opacity: .85;
+  }
+}
+
+.button:focus-visible {
+  outline: 3px solid var(--color-text);
+  outline-offset: 3px;
+}
+
+.button--s {
+  width: 100px;
+  height: 44px;
+  font-size: 16px;
+}
+
+.button--m {
+  width: 100%;
+  height: 61px;
+  font-size: 20px;
+}
+
+.button--l {
+  width: 100%;
+  height: 44px;
+  font-size: 16px;
+}
+
+/* 白抜きボタン（電話など、LINEより一段控えめな予約手段） */
+.button--outline {
+  background: var(--color-bg);
+  color: var(--color-text);
+  border: 1px solid var(--color-text);
+}
+
+/* CVボタンの下の後押し。2つのかたまりで、幅が足りなければ間で折り返す */
+.cv-note {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  column-gap: 8px;
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.cv-note b {
+  color: var(--color-beni);
+}
+
+
+
+.heading {
+  font-family: var(--font-round);
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 29px;
+  letter-spacing: .1em;
+  text-align: center;
+}
+
+/* ==========================================================
+   5. ヘッダー
+   ========================================================== */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 76px;
+  padding-inline: var(--gutter);
+  gap: 8px;
+}
+
+/* 320pxなど狭い画面では、ロゴが少し縮んでボタンと並ぶ */
+.header__logo {
+  flex: 0 1 192px;
+  min-width: 0;
+}
+
+/* ==========================================================
+   6. FV
+   ========================================================== */
+.fv {
+  position: relative;
+  height: 600px;
+}
+
+.fv__half {
+  position: relative;
+  height: 300px;
+  overflow: hidden;
+}
+
+.fv__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 紅ほっぺ：右上の粒に寄せる */
+.fv__half--beni {
+  background: #F8E2DA;
+}
+
+.fv__half--beni .fv__img {
+  object-position: 100% 0;
+  /* 左下に向かって写真を消し、「紅派？」とラベルの後ろを明るくする（赤い文字が赤い粒に乗らないように） */
+  -webkit-mask-image: linear-gradient(to bottom left, #000 25%, transparent 60%);
+  mask-image: linear-gradient(to bottom left, #000 25%, transparent 60%);
+}
+
+/* 淡雪：粒を左に寄せて、右下にラベルの場所をあける */
+.fv__half--shiro .fv__img {
+  object-position: 50% 50%;
+  transform: scale(1.7) translate(-14%, 6%);
+}
+
+/* 中央の白い光。上下の写真をなじませ、コピーを読みやすくする */
+.fv__glow {
+  position: absolute;
+  left: 50%;
+  top: 111px;
+  width: 378px;
+  height: 378px;
+  translate: -50% 0;
+  /* 画面の中央に置く */
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(252, 243, 235, .85), rgba(252, 243, 235, 0));
+  pointer-events: none;
+}
+
+/* キャッチコピー：HTMLでは先頭、見た目は写真の上に重ねる */
+.fv__catch {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  font-family: var(--font-round);
+
+}
+
+.fv__beni,
+.fv__shiro {
+  position: absolute;
+  font-weight: 700;
+  font-size: 44px;
+  line-height: 1;
+  letter-spacing: .08em;
+  paint-order: stroke fill;
+  -webkit-text-stroke: 5px #FCF3EB;
+}
+
+.fv__beni {
+  left: 55px;
+  top: 220px;
+  color: var(--color-beni);
+  transform: rotate(-7deg);
+}
+
+.fv__shiro {
+  right: 31px;
+  top: 338px;
+  color: var(--color-shiro);
+  transform: rotate(7deg);
+}
+
+/* 右端から置き、画面幅が変わっても右寄せを保つ */
+.fv__sub {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 286px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: .08em;
+}
+
+/* 紅派・白派のラベル（タップで品種紹介へ） */
+.fv__label {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px;
+  border-radius: var(--radius-s);
+  background: rgba(255, 255, 255, .8);
+  box-shadow: var(--shadow-label);
+  font-family: var(--font-round);
+  font-weight: 700;
+}
+
+.fv__half--beni .fv__label {
+  left: 16px;
+  top: 16px;
+}
+
+.fv__half--shiro .fv__label {
+  right: 15px;
+  bottom: 16px;
+}
+
+.fv__label-ttl {
+  font-size: 16px;
+  line-height: 23px;
+}
+
+.fv__label-txt {
+  font-size: 12px;
+  line-height: 17px;
+  font-weight: 500;
+}
+
+.fv__label:focus-visible {
+  outline: 3px solid var(--color-text);
+  outline-offset: 2px;
+}
+
+.fv__badge {
+  position: absolute;
+  right: 141px;
+  top: 183px;
+  z-index: 4;
+  /* ラベルと同じく右端から。ラベルの左上にかかる位置 */
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: var(--color-green);
+  color: var(--color-white);
+  font-family: var(--font-round);
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 15px;
+  text-align: center;
+}
+
+/* FV下の情報 */
+.fv-info {
+  padding: 24px var(--gutter);
+  text-align: center;
+}
+
+.fv-info__lead {
+  font-family: var(--font-round);
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 23px;
+  letter-spacing: .05em;
+}
+
+/* 「どっちも」だけに傍点。CSSのtext-emphasisで、文字ごとに点がつく */
+.fv-info__dots {
+  font-style: normal;
+  text-emphasis: filled dot var(--color-text);
+  -webkit-text-emphasis: filled dot var(--color-text);
+}
+
+.fv-info__period {
+  margin-top: 16px;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--color-muted);
+}
+
+.fv-info .button {
+  margin-top: 4px;
+}
+
+/* ==========================================================
+   7. 2つのいちご
+   ========================================================== */
+.variety {
+  padding: var(--section-top) var(--gutter) 24px;
+}
+
+.variety__tabs {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: var(--heading-gap);
+}
+
+.variety__tab {
+  width: 130px;
+  height: 44px;
+  border-radius: 999px;
+  background: var(--color-white);
+  font-family: var(--font-round);
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.variety__tab[aria-selected="true"] {
+  background: var(--color-beni);
+  color: var(--color-white);
+}
+
+.variety__tab--shiro[aria-selected="true"] {
+  background: var(--color-shiro);
+}
+
+.variety__tab:focus-visible {
+  outline: 3px solid var(--color-text);
+  outline-offset: 2px;
+}
+
+.variety__panel {
+  margin-top: 16px;
+}
+
+.variety__visual {
+  position: relative;
+}
+
+.variety__img {
+  width: 100%;
+  height: 232px;
+  object-fit: cover;
+  border-radius: var(--radius-s);
+  object-position: 70% 72%;
+}
+
+/* 縦書きコピー：小さい前置き → 大きい言い切り */
+.variety__copy {
+  position: absolute;
+  top: 17px;
+  right: 11px;
+  writing-mode: vertical-rl;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  font-family: var(--font-round);
+  font-weight: 700;
+}
+
+.variety__copy-small {
+  font-size: 12px;
+  letter-spacing: .2em;
+}
+
+.variety__copy-big {
+  margin-top: 8px;
+  font-size: 48px;
+  line-height: 1;
+  letter-spacing: .1em;
+  color: var(--color-beni);
+  paint-order: stroke fill;
+  -webkit-text-stroke: 4px var(--color-white);
+}
+
+/* 淡雪は前置きが長いので字間を詰め、白い写真の上でも読めるよう濃いピンクに */
+.variety__panel--shiro .variety__copy {
+  top: 12px;
+}
+
+.variety__panel--shiro .variety__copy-small {
+  letter-spacing: .02em;
+}
+
+.variety__panel--shiro .variety__copy-big {
+  color: var(--color-shiro);
+}
+
+.variety__name {
+  margin-top: 16px;
+  font-family: var(--font-round);
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+  color: var(--color-beni);
+}
+
+.variety__panel--shiro .variety__name {
+  color: var(--color-shiro);
+}
+
+.variety__list {
+  margin-top: 12px;
+  display: grid;
+  gap: 7px;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.variety__list li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.variety__list li::before {
+  content: "";
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-beni);
+}
+
+.variety__panel--shiro .variety__list li::before {
+  background: var(--color-shiro);
+}
+
+/* ==========================================================
+   8. 楽しみ方3つ
+   ========================================================== */
+.enjoy {
+  padding: var(--section-top) 0 24px;
+}
+
+.enjoy__list {
+  margin: var(--heading-gap) 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 16px;
+}
+
+/* 1項目 = 吹き出し（上）＋丸い写真（下）。写真とイラストは位置を指定して置く */
+.enjoy__item {
+  position: relative;
+  height: 488px;
+}
+
+.enjoy__bubble {
+  position: absolute;
+  top: 0;
+  z-index: 1;
+  width: fit-content;
+  /* 文章の長さに合わせて幅が決まる */
+  padding: 16px;
+  border-radius: var(--radius-s);
+  background: var(--color-white);
+}
+
+/* 吹き出しのしっぽ。3つとも左端から144pxの位置で、下の写真を指す */
+.enjoy__bubble::after {
+  content: "";
+  position: absolute;
+  left: 144px;
+  top: 100%;
+  width: 20px;
+  height: 14px;
+  background: var(--color-white);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+.enjoy__ttl {
+  font-family: var(--font-round);
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 23px;
+  letter-spacing: .05em;
+}
+
+.enjoy__txt {
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: .05em;
+  color: var(--color-muted);
+}
+
+/* 丸い枠（span）の中に写真を入れる。枠が overflow: hidden なので、
+   中の写真だけを拡大しても丸の大きさは変わらない */
+.enjoy__photo {
+  position: absolute;
+  top: 130px;
+  width: 358px;
+  height: 358px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.enjoy__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.enjoy__item--1 .enjoy__photo img {
+  transform: scale(1.8);
+  transform-origin: 45% 42%;
+}
+
+.enjoy__illust {
+  position: absolute;
+  height: auto;
+  pointer-events: none;
+}
+
+/* 左・右・左：吹き出しと写真の位置を項目ごとに入れ替える */
+.enjoy__item--1 .enjoy__bubble {
+  left: 16px;
+}
+
+.enjoy__item--1 .enjoy__photo {
+  left: -39px;
+}
+
+/* 左の吹き出しと重ならないよう、画面が狭いほど小さく（390pxで66px）。320px台では置く場所がないので隠す */
+.enjoy__illust--berry-l {
+  right: 25px;
+  top: 12px;
+  width: clamp(40px, calc(100% - 330px), 60px);
+}
+
+@media (max-width: 359px) {
+  .enjoy__illust--berry-l {
+    display: none;
+  }
+}
+
+.enjoy__illust--berry-s {
+  right: 62px;
+  top: 92px;
+  width: 44px;
+  transform: rotate(8deg);
+}
+
+.enjoy__item--2 .enjoy__bubble {
+  right: 16px;
+}
+
+.enjoy__item--2 .enjoy__photo {
+  right: -34px;
+}
+
+/* 右の吹き出しと重ならないよう、画面が狭いほどカメラを小さくする（390pxで140px） */
+.enjoy__illust--camera {
+  left: 24px;
+  top: 18px;
+  width: clamp(80px, calc(100% - 250px), 120px);
+  transform: rotate(-10deg);
+}
+
+.enjoy__item--3 .enjoy__bubble {
+  left: 16px;
+}
+
+.enjoy__item--3 .enjoy__photo {
+  left: -34px;
+}
+
+.enjoy__illust--spoon {
+  left: 262px;
+  top: -4px;
+  width: 82px;
+  transform: rotate(14deg);
+}
+
+/* ==========================================================
+   9. 料金・期間
+   ========================================================== */
+.price {
+  padding: var(--section-top) var(--gutter) 24px;
+}
+
+/* カレンダー */
+.calendar {
+  margin-top: var(--heading-gap);
+}
+
+.calendar__table {
+  width: 100%;
+  max-width: 343px;
+  margin-inline: auto;
+  border-collapse: collapse;
+  table-layout: fixed;
+  text-align: center;
+}
+
+.calendar__month {
+  font-size: 12px;
+  line-height: 18px;
+  padding-bottom: 4px;
+}
+
+.calendar__table th {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.calendar__table td {
+  height: 42px;
+  padding: 0;
+  border: 1px solid var(--color-line);
+  background: var(--color-white);
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.calendar__table td .calendar__mark {
+  margin-top: 5px;
+}
+
+.calendar__table td.is-out {
+  background: transparent;
+  color: var(--color-line-dark);
+}
+
+/* 期間外の日 */
+.calendar__table td.calendar__fallback {
+  height: auto;
+  padding: 16px 8px;
+  font-weight: 400;
+}
+
+/* JSが動かないときの案内 */
+
+/* ○△× は文字ではなくCSSで描く。どの環境でも同じ太さ・色になる */
+.calendar__mark {
+  display: block;
+  width: 9px;
+  height: 9px;
+  margin-inline: auto;
+}
+
+.calendar__mark--ok {
+  border: 2px solid var(--color-green);
+  border-radius: 50%;
+}
+
+/* △：オレンジの三角の上に、背景色の小さい三角を重ねて「線」に見せる */
+.calendar__mark--few {
+  position: relative;
+  width: 11px;
+  background: var(--color-orange);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.calendar__mark--few::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--mark-bg, var(--color-white));
+  clip-path: polygon(50% 38%, 80% 80%, 20% 80%);
+}
+
+.calendar__legend {
+  --mark-bg: var(--color-bg);
+}
+
+/* 凡例は生成りの上に置くので、穴の色も生成り */
+.calendar__mark--full {
+  background:
+    linear-gradient(45deg, transparent 42%, var(--color-beni) 42% 58%, transparent 58%),
+    linear-gradient(-45deg, transparent 42%, var(--color-beni) 42% 58%, transparent 58%);
+}
+
+.calendar__legend {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 4px;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.calendar__legend li {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.calendar__legend .calendar__mark {
+  margin: 0;
+  width: 8px;
+  height: 8px;
+}
+
+.calendar__nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+.calendar__arrow {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #D9D9D9;
+  border-radius: 4px;
+}
+
+.calendar__arrow::before {
+  /* くの字の矢印 */
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  border-left: 2px solid var(--color-text);
+  border-bottom: 2px solid var(--color-text);
+  transform: translate(-30%, -50%) rotate(45deg);
+}
+
+.calendar__arrow--next::before {
+  transform: translate(-70%, -50%) rotate(-135deg);
+}
+
+.calendar__arrow:disabled {
+  opacity: .3;
+  cursor: default;
+}
+
+.calendar__arrow:focus-visible {
+  outline: 3px solid var(--color-text);
+  outline-offset: 2px;
+}
+
+/* 料金表 */
+.price__list {
+  margin-top: 24px;
+  display: grid;
+  gap: 8px;
+}
+
+.price__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 40px;
+  border-bottom: 1px solid var(--color-line-dark);
+  font-size: 14px;
+}
+
+.price__row dt {
+  color: var(--color-muted);
+}
+
+.price__row dd {
+  margin: 0;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+/* 金額は一段大きく */
+.price__note {
+  margin-top: 4px;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.price__cta {
+  display: grid;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+/* ==========================================================
+   10. アクセス
+   ========================================================== */
+.access {
+  padding: var(--section-top) var(--gutter) 24px;
+}
+
+/* 楽しみ方の丸写真と同じく、枠で切り抜いて中の地図だけを拡大（ピンが左上寄りに来る） */
+.access__map {
+  height: 227px;
+  margin-top: var(--heading-gap);
+  overflow: hidden;
+}
+
+/* 架空の農園であることの注記（地図・住所が実在の場所と結びつかないように） */
+.access__caution {
+  margin-top: 4px;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--color-muted);
+}
+
+.access__map img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.4);
+  transform-origin: 12px 200px;
+}
+
+.access__info {
+  margin-top: 16px;
+  display: grid;
+  gap: 4px;
+}
+
+.access__info dt {
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--color-muted);
+}
+
+.access__info dd {
+  margin: 4px 0 0;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.access__ways {
+  margin-top: 16px;
+  display: grid;
+  gap: 4px;
+}
+
+.access__way {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.access__way img {
+  flex: none;
+  width: 40px;
+  height: 40px;
+}
+
+/* ==========================================================
+   11. よくあるご質問
+   ========================================================== */
+.faq {
+  padding: var(--section-top) var(--gutter) 24px;
+}
+
+.faq__list {
+  margin-top: var(--heading-gap);
+  display: grid;
+  gap: 4px;
+}
+
+.faq__item {
+  border: 1px solid #ECECEC;
+  border-radius: 4px;
+  background: var(--color-white);
+  overflow: hidden;
+}
+
+.faq__q {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 40px 8px 8px;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 20px;
+  cursor: pointer;
+  list-style: none;
+  /* 標準の ▶ を消す */
+}
+
+.faq__q::-webkit-details-marker {
+  display: none;
+}
+
+/* Safari用 */
+.faq__item[open] .faq__q {
+  background: var(--color-pink);
+}
+
+/* 右のV字。開いたら上向きに回す */
+.faq__q::after {
+  content: "";
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid var(--color-text);
+  border-bottom: 2px solid var(--color-text);
+  transform: translateY(-70%) rotate(45deg);
+  transition: transform .2s;
+}
+
+.faq__item[open] .faq__q::after {
+  transform: translateY(-30%) rotate(-135deg);
+}
+
+.faq__q:focus-visible {
+  outline: 3px solid var(--color-text);
+  outline-offset: -3px;
+}
+
+.faq__a {
+  padding: 12px 10px;
+  font-size: 14px;
+  line-height: 22px;
+  letter-spacing: .05em;
+  color: var(--color-muted);
+}
+
+/* ==========================================================
+   12. 最後のCTA
+   ========================================================== */
+/* 背景写真は、真ん中にいちごのない空白がある。
+   高さを440pxにすると写真が幅約546pxで表示され、空白（幅の約55%＝約300px）に
+   コピーとボタンが収まる。中身は上下中央に置いて、写真の空白と中心をそろえる */
+.cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 440px;
+  padding: 24px var(--gutter);
+  background: url("../img/cta_bg.jpg") center / cover no-repeat;
+  text-align: center;
+}
+
+.cta__ttl {
+  font-family: var(--font-round);
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 29px;
+  letter-spacing: .05em;
+}
+
+.cta__note {
+  margin-top: 24px;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 17px;
+}
+
+.cta__note::before {
+  content: "\\ ";
+}
+
+.cta__note::after {
+  content: " /";
+}
+
+.cta__buttons {
+  display: grid;
+  gap: 8px;
+  width: 245px;
+  margin-top: 4px;
+}
+
+/* ==========================================================
+   13. フッター
+   ========================================================== */
+.footer {
+  display: flex;
+  justify-content: center;
+  padding: 8px 0;
+}
+
+/* ==========================================================
+   14. アニメーション
+   ----------------------------------------------------------
+   ・transform ではなく translate / scale / rotate（個別プロパティ）を動かす。
+     イラストの傾きなど、もともと transform で指定した見た目を上書きしないため。
+   ・最初に隠す指定は .js がついたときだけ。JSが動かなくても中身は必ず見える。
+   ========================================================== */
+
+/* ---------- 共通の動き ---------- */
+@keyframes pop-in {
+  0% {
+    opacity: 0;
+    scale: .3;
+  }
+
+  60% {
+    opacity: 1;
+    scale: 1.12;
+  }
+
+  80% {
+    scale: .96;
+  }
+
+  100% {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@keyframes up-in {
+  from {
+    opacity: 0;
+    translate: 0 24px;
+  }
+
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@keyframes zoom-in {
+  from {
+    opacity: 0;
+    scale: .75;
+  }
+
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@keyframes nudge {
+
+  /* 「押してね」と軽くはずむ */
+  0%,
+  24%,
+  100% {
+    scale: 1;
+  }
+
+  8% {
+    scale: 1.06;
+  }
+
+  16% {
+    scale: .98;
+  }
+}
+
+@keyframes stamp {
+
+  /* ハンコを押すように、大きい→ぴったり */
+  0% {
+    opacity: 0;
+    scale: 2;
+  }
+
+  60% {
+    opacity: 1;
+    scale: .9;
+  }
+
+  100% {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+/* ---------- FV：読み込んだらすぐ ---------- */
+/* 紅派・白派だけを動かす。ほかの要素は最初から表示 */
+.fv__beni {
+  animation: pop-in .7s var(--ease-out) .2s both;
+}
+
+.fv__shiro {
+  animation: pop-in .7s var(--ease-out) .55s both;
+}
+
+/* ---------- スクロールで登場（main.js が .is-in をつける） ---------- */
+.js .reveal {
+  opacity: 0;
+}
+
+.js .reveal.is-in {
+  animation: up-in .7s var(--ease-pop) var(--delay, 0s) both;
+}
+
+.js .reveal--pop.is-in {
+  animation-name: pop-in;
+  animation-timing-function: var(--ease-out);
+}
+
+.js .reveal--zoom.is-in {
+  animation-name: zoom-in;
+}
+
+/* 吹き出しは、しっぽの先（左から154px・下端）を中心にふくらむ */
+.enjoy__bubble {
+  transform-origin: 154px 100%;
+}
+
+/* ---------- タブを切り替えたとき ---------- */
+/* hidden が外れると表示が切り替わり、アニメーションが最初から再生される */
+.variety__panel {
+  animation: up-in .4s var(--ease-out) both;
+}
+
+.variety__copy-big {
+  animation: stamp .5s var(--ease-pop) .15s both;
+}
+
+/* ---------- FAQ：開閉は main.js で高さをなめらかに変える ---------- */
+/* 閉じている途中（.is-closing）は、もう「閉じた見た目」にしておく */
+.faq__item.is-closing .faq__q {
+  background: none;
+}
+
+.faq__item.is-closing .faq__q::after {
+  transform: translateY(-70%) rotate(45deg);
+}
+
+/* ---------- ボタン ---------- */
+.button {
+  transition: opacity .2s, translate .2s var(--ease-pop), scale .15s;
+}
+
+@media (hover: hover) {
+  .button:hover {
+    translate: 0 -2px;
+  }
+}
+
+.button:active {
+  scale: .95;
+}
+
+/* 押した瞬間にむにっとへこむ */
+/* 最後のLINEボタン：画面に入ってから3回だけはずむ（ずっと動き続けないように） */
+.js .cta__buttons.is-in .button:not(.button--outline) {
+  animation: nudge 3s ease-in-out 1s 3;
+}
+
+.variety__tab {
+  transition: background-color .2s, color .2s, scale .15s;
+}
+
+.variety__tab:active {
+  scale: .94;
+}
+
+/* ---------- 動きを減らす設定の人には、動かさない ---------- */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .js .reveal {
+    opacity: 1;
+  }
+}

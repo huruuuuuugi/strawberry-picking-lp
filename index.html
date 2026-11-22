@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>紅派？白派？ いちご狩り予約｜ベリーの丘ファーム</title>
+  <meta name="description" content="紅ほっぺと淡雪、どっちも食べ放題。ベリーの丘ファーム（架空）の春休み限定いちご狩り。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="page">
+
+    <!-- ヘッダー：ロゴ＋予約ボタン -->
+    <header class="header">
+      <a class="header__logo" href="#top">
+        <img src="img/logo-horizontal.svg" alt="ベリーの丘ファーム" width="192" height="41">
+      </a>
+      <!-- LINE予約はデザイン上の表現。押しても移動しないので、リンクではなくボタンにする -->
+      <button class="button button--s" type="button">LINE予約</button>
+    </header>
+
+    <main>
+      <!-- 01 FV -->
+      <section class="fv" id="top">
+        <h1 class="fv__catch">
+          <span class="fv__beni">紅派？</span>
+          <span class="fv__shiro">白派？</span>
+          <span class="fv__sub">決着は、いちご畑で。</span>
+        </h1>
+
+        <div class="fv__half fv__half--beni">
+          <img class="fv__img" src="img/fv_benihoppe.jpg" alt="" width="1152" height="928" fetchpriority="high">
+          <a class="fv__label" href="#variety" data-tab="beni">
+            <span class="fv__label-ttl"><span class="u-beni">紅派</span>はこっち→</span>
+            <span class="fv__label-txt">甘酸っぱい・紅ほっぺ</span>
+          </a>
+        </div>
+
+        <div class="fv__half fv__half--shiro">
+          <img class="fv__img" src="img/fv_awayuki.jpg" alt="" width="1152" height="928" fetchpriority="high">
+          <p class="fv__badge">数量<br>限定</p>
+          <a class="fv__label" href="#variety" data-tab="shiro">
+            <span class="fv__label-ttl"><span class="u-shiro">白派</span>はこっち→</span>
+            <span class="fv__label-txt">やさしい甘さ・淡雪</span>
+          </a>
+        </div>
+
+        <div class="fv__glow" aria-hidden="true"></div>
+      </section>
+
+      <div class="fv-info">
+        <p class="fv-info__lead">紅ほっぺと淡雪、<em class="fv-info__dots">どっちも</em>食べ放題。</p>
+        <p class="fv-info__period">春休み限定 <span>3/1~4/30</span></p>
+        <button class="button button--m" type="button">LINEで予約する</button>
+        <p class="cv-note"><span><b>学生2名以上 2,200円</b></span><span>LINEで日付と人数を送るだけ</span></p>
+      </div>
+
+      <!-- 02 2つのいちご（タブ切り替え） -->
+      <section class="variety" id="variety">
+        <h2 class="heading">２つのいちご</h2>
+
+        <!-- タブはJSが動くときだけ表示（main.jsで hidden を外す）。JSなしでは2つのパネルを両方見せる -->
+        <div class="variety__tabs" role="tablist" aria-label="いちごの品種" hidden>
+          <button class="variety__tab" type="button" role="tab" id="tab-beni" aria-controls="panel-beni" aria-selected="true">紅ほっぺ</button>
+          <button class="variety__tab variety__tab--shiro" type="button" role="tab" id="tab-shiro" aria-controls="panel-shiro" aria-selected="false" tabindex="-1">淡雪（限定）</button>
+        </div>
+
+        <div class="variety__panel" role="tabpanel" id="panel-beni" aria-labelledby="tab-beni">
+          <div class="variety__visual">
+            <img class="variety__img" src="img/variety_benihoppe.jpg" alt="断面まで赤い紅ほっぺ" width="900" height="725" decoding="async">
+            <p class="variety__copy">
+              <span class="variety__copy-small">甘酸っぱいは</span>
+              <span class="variety__copy-big">正義</span>
+            </p>
+          </div>
+          <h3 class="variety__name">紅ほっぺ/甘酸っぱい派</h3>
+          <ul class="variety__list">
+            <li>甘味と酸味のバランス</li>
+            <li>果肉まで赤い</li>
+            <li>旬は3~4月</li>
+          </ul>
+        </div>
+
+        <div class="variety__panel variety__panel--shiro" role="tabpanel" id="panel-shiro" aria-labelledby="tab-shiro">
+          <div class="variety__visual">
+            <img class="variety__img" src="img/variety_awayuki.jpg" alt="断面が白い淡雪" width="900" height="725" decoding="async" loading="lazy">
+            <p class="variety__copy">
+              <span class="variety__copy-small">白いのに、ちゃんと</span>
+              <span class="variety__copy-big">甘い</span>
+            </p>
+          </div>
+          <h3 class="variety__name">淡雪/やさしい甘さ派</h3>
+          <ul class="variety__list">
+            <li>酸味が少なく、甘さが際立つ</li>
+            <li>淡いピンクのかわいい見た目</li>
+            <li>1日10組の数量限定</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 03 楽しみ方3つ（丸い写真＋吹き出しを左・右・左に） -->
+      <section class="enjoy" id="enjoy">
+        <h2 class="heading">楽しみ方3つ</h2>
+
+        <ol class="enjoy__list">
+          <li class="enjoy__item enjoy__item--1">
+            <div class="enjoy__bubble">
+              <h3 class="enjoy__ttl">食べ比べ</h3>
+              <p class="enjoy__txt">紅も白も食べ放題。<br>友達と交換して、どっち派か決めよう。</p>
+            </div>
+            <span class="enjoy__photo"><img src="img/enjoy01_tabekurabe.jpg" alt="紅ほっぺと淡雪を1粒ずつ持って並べた手元" width="1152" height="928" loading="lazy" decoding="async"></span>
+            <img class="enjoy__illust enjoy__illust--berry-l" src="img/illust_strawberry.png" alt="" width="370" height="440" loading="lazy">
+            <img class="enjoy__illust enjoy__illust--berry-s" src="img/illust_strawberry.png" alt="" width="370" height="440" loading="lazy">
+          </li>
+
+          <li class="enjoy__item enjoy__item--2">
+            <div class="enjoy__bubble">
+              <h3 class="enjoy__ttl">写真スポット</h3>
+              <p class="enjoy__txt">ハウス内に撮影スポットを用意。<br>春休みの思い出を写真に。</p>
+            </div>
+            <span class="enjoy__photo"><img src="img/enjoy02_photospot.jpg" alt="いちごの飾りがついたアーチとベンチの撮影スポット" width="900" height="725" loading="lazy" decoding="async"></span>
+            <img class="enjoy__illust enjoy__illust--camera" src="img/illust_camera.png" alt="" width="540" height="350" loading="lazy">
+          </li>
+
+          <li class="enjoy__item enjoy__item--3">
+            <div class="enjoy__bubble">
+              <h3 class="enjoy__ttl">限定スイーツ</h3>
+              <p class="enjoy__txt">併設カフェで、紅派・白派。<br>それぞれの限定スイーツを。</p>
+            </div>
+            <span class="enjoy__photo"><img src="img/enjoy03_sweets.jpg" alt="紅ほっぺと淡雪、2種類のいちごパフェ" width="900" height="725" loading="lazy" decoding="async"></span>
+            <img class="enjoy__illust enjoy__illust--spoon" src="img/illust_spoon.png" alt="" width="310" height="580" loading="lazy">
+          </li>
+        </ol>
+      </section>
+
+      <!-- 04 料金・期間 -->
+      <section class="price" id="price">
+        <h2 class="heading">料金・期間</h2>
+
+        <!-- 空き状況カレンダー（2週間ずつ表示。中身は main.js で作る） -->
+        <div class="calendar">
+          <table class="calendar__table">
+            <caption class="calendar__month" id="calendar-month">2027年3月</caption>
+            <thead>
+              <tr><th scope="col">月</th><th scope="col">火</th><th scope="col">水</th><th scope="col">木</th><th scope="col">金</th><th scope="col">土</th><th scope="col">日</th></tr>
+            </thead>
+            <tbody id="calendar-body">
+              <tr><td class="calendar__fallback" colspan="7">空き状況は、LINEでお問い合わせください。</td></tr>
+            </tbody>
+          </table>
+
+          <ul class="calendar__legend">
+            <li><span class="calendar__mark calendar__mark--ok" aria-hidden="true"></span>空きあり</li>
+            <li><span class="calendar__mark calendar__mark--few" aria-hidden="true"></span>残りわずか</li>
+            <li><span class="calendar__mark calendar__mark--full" aria-hidden="true"></span>満席</li>
+          </ul>
+
+          <div class="calendar__nav" hidden>
+            <button class="calendar__arrow calendar__arrow--prev" type="button" id="calendar-prev" aria-label="前の2週間"></button>
+            <button class="calendar__arrow calendar__arrow--next" type="button" id="calendar-next" aria-label="次の2週間"></button>
+          </div>
+        </div>
+
+        <!-- 料金表：項目名と値のペアなので dl を使う -->
+        <dl class="price__list">
+          <div class="price__row"><dt>一般</dt><dd>2,500 円</dd></div>
+          <div class="price__row"><dt>学生（2名以上）</dt><dd>2,200 円</dd></div>
+          <div class="price__row"><dt>期間</dt><dd>3/1~4/30</dd></div>
+          <div class="price__row"><dt>時間</dt><dd>10:00~16:00・食べ放題30分</dd></div>
+        </dl>
+        <p class="price__note">※淡雪は1日10組の数量限定</p>
+
+        <div class="price__cta">
+          <button class="button button--l" type="button">LINEで予約する</button>
+          <a class="button button--l button--outline" href="tel:000-0000-0000">電話で予約する</a>
+        </div>
+      </section>
+
+      <!-- 05 アクセス -->
+      <section class="access" id="access">
+        <h2 class="heading">アクセス</h2>
+
+        <div class="access__map"><img src="img/access_map.jpg" alt="農園周辺の航空写真の地図" width="1170" height="794" loading="lazy" decoding="async"></div>
+        <p class="access__caution">※ベリーの丘ファームは架空の農園です。地図・住所はイメージです。</p>
+
+        <dl class="access__info">
+          <div><dt>住所</dt><dd>静岡県三島市塚原新田181-1</dd></div>
+          <div><dt>営業時間</dt><dd>10:00~16:00</dd></div>
+        </dl>
+
+        <ul class="access__ways">
+          <li class="access__way">
+            <img src="img/icon_bus.png" alt="バス" width="40" height="40" loading="lazy">
+            <p>〇〇駅から無料送迎バスあり（30分間隔で運行）</p>
+          </li>
+          <li class="access__way">
+            <img src="img/icon_car.png" alt="車" width="40" height="40" loading="lazy">
+            <p>東名沼津IC・新東名長泉沼津から伊豆縦貫道で下田・三島方面へ約10分</p>
+          </li>
+        </ul>
+      </section>
+
+      <!-- 06 よくあるご質問（details/summary で開閉。なめらかな動きと「1つだけ開く」は main.js） -->
+      <section class="faq" id="faq">
+        <h2 class="heading">よくあるご質問</h2>
+
+        <div class="faq__list">
+          <details class="faq__item" open>
+            <summary class="faq__q">汚れてもいい服装がいい？</summary>
+            <p class="faq__a">イチゴの果汁がつくことがあるので、白い服は避けるのがおすすめ。<br>おしぼりは用意しています。</p>
+          </details>
+          <details class="faq__item">
+            <summary class="faq__q">雨の日でも大丈夫？</summary>
+            <p class="faq__a">いちご狩りはハウスの中なので、雨の日でも濡れずに楽しめます。</p>
+          </details>
+          <details class="faq__item">
+            <summary class="faq__q">何人から予約できる？</summary>
+            <p class="faq__a">1名から予約できます。学生料金は2名以上でのご利用が対象です。</p>
+          </details>
+          <details class="faq__item">
+            <summary class="faq__q">淡雪が売り切れていたら？</summary>
+            <p class="faq__a">紅ほっぺの食べ放題をお楽しみいただけます。淡雪は1日10組限定なので、確実に食べたい方はお早めにご予約ください。</p>
+          </details>
+          <details class="faq__item">
+            <summary class="faq__q">写真撮影は可能？</summary>
+            <p class="faq__a">はい。ハウス内の撮影スポットをはじめ、自由に撮影できます。</p>
+          </details>
+        </div>
+      </section>
+
+      <!-- 07 最後のCTA -->
+      <section class="cta" id="reserve">
+        <h2 class="cta__ttl">紅派も、白派も。<br>いちご畑で待っています。</h2>
+        <p class="cta__note">淡雪は数量限定・お早めに</p>
+        <div class="cta__buttons">
+          <!-- 本番ではLINE公式アカウントのURLへのリンク（<a>）に差し替える -->
+          <button class="button button--l" type="button">LINEで予約する</button>
+          <a class="button button--l button--outline" href="tel:000-0000-0000">電話で予約する</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <a href="#top"><img src="img/logo-horizontal.svg" alt="ベリーの丘ファーム" width="192" height="41" loading="lazy"></a>
+    </footer>
+
+  </div>
+  <script src="js/main.js"></script>
+</body>
+</html>

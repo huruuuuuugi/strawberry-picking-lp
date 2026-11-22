@@ -1,0 +1,32 @@
+# 公開するのはサイトに必要なファイルだけ。
+# まず全部を除外し、「!」で必要なものだけを戻す（ホワイトリスト方式）。
+# 動画・元のPNG・Instagram画像・下書きなどは、手元にだけ残る。
+/*
+
+!/.gitignore
+!/README.md
+!/index.html
+!/css/
+!/js/
+
+# 画像は、ページで実際に使っているものだけ
+# （フォルダごと除外されていると中のファイルを戻せないので、先にフォルダを戻してから中身を絞る）
+!/img/
+/img/*
+!/img/access_map.jpg
+!/img/cta_bg.jpg
+!/img/enjoy01_tabekurabe.jpg
+!/img/enjoy02_photospot.jpg
+!/img/enjoy03_sweets.jpg
+!/img/fv_awayuki.jpg
+!/img/fv_benihoppe.jpg
+!/img/variety_awayuki.jpg
+!/img/variety_benihoppe.jpg
+!/img/icon_bus.png
+!/img/icon_car.png
+!/img/illust_camera.png
+!/img/illust_spoon.png
+!/img/illust_strawberry.png
+!/img/logo-horizontal.svg
+
+.DS_Store
